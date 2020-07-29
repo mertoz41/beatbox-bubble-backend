@@ -6,11 +6,16 @@ class UsersController < ApplicationController
     def show
         
         user = User.find(params["id"].to_i)
-        arr = []
+        # arr = []
+        # othearr = []
 
-        user.tracks.attachments.each { |track| arr.push(Rails.application.routes.url_helpers.rails_blob_path(track, only_path: true))}
+        
+        
 
-        render json: {user: user, urls: arr}.to_json( :include => [:follows, :followed_by])
+        # user.tracks.attachments.each { |track| arr.push(Rails.application.routes.url_helpers.rails_blob_path(track, only_path: true))}
+        
+
+        render json: {user: user}.to_json( :include => [:follows, :followed_by, :shares, :sharedsongs, :songs])
     end 
 
     def addtrack
@@ -20,17 +25,18 @@ class UsersController < ApplicationController
         # track = params["formData"]["track"]
         track = {io: File.open(params[:track].to_io), filename: name}
         # photo = {io: File.open("./public/johnwall.png"), filename: "johnwall.png", content_type: "image/png"}
-
-    
+        
+        
         
         
         user.tracks.attach(track)
-
+        
         # arr = []
-
+        
         # user.tracks.attachments.each { |track| arr.push(Rails.application.routes.url_helpers.rails_blob_path(track, only_path: true))}
-
+        
         url = Rails.application.routes.url_helpers.rails_blob_path(user.tracks.last, only_path: true)
+        
         # url = Rails.application.routes.url_helpers.rails_blob_path(user.tracks.all, only_path: true)
 
         render json: {message: "Attached to file", url: url, trackname: name}
@@ -45,5 +51,57 @@ class UsersController < ApplicationController
         user.tracks.attachments.each { |track| arr.push(Rails.application.routes.url_helpers.rails_blob_path(track, only_path: true))}
 
         render json: {message: "Attached to file", urls: arr}
+    end 
+
+    def timeline
+        
+        id = params[:id].to_i
+        logging_user = User.find(id)
+        followed_users = []
+        logging_user.follows.each do |obj|
+            followed = User.find(obj.followed_id)
+            followed_users.push(followed)
+        end
+
+        # byebug
+        
+        tl_tracks = []
+        
+        # followed_users.each do |user| 
+        # user.tracks.attachments.each { |track| tl_tracks.push(Rails.application.routes.url_helpers.rails_blob_path(track, only_path: true))}
+        # end 
+        
+        followed_users.each do |user|
+            # songObj = {}
+            user.songs.each do |song|
+                tl_tracks.push(song)
+                
+                # shared_version = Sharedsong.find_by(name: song.name)
+
+                # byebug
+                
+                
+                # songObj = song.attributes
+                # songObj[:comment_count] = song.comments.length
+                # songObj[:shared_count] = shared_version.shares.length
+                # songObj[:shared_version_id] = shared_version.id
+                # tl_tracks.push(songObj)
+                
+                
+                
+            end 
+        end 
+        
+        
+        
+        
+
+        
+        
+        
+        render json: {tl_tracks: tl_tracks} 
+        
+        
+
     end 
 end

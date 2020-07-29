@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_23_144007) do
+ActiveRecord::Schema.define(version: 2020_07_26_165659) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -34,11 +34,11 @@ ActiveRecord::Schema.define(version: 2020_07_23_144007) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
     t.string "message"
-    t.integer "posting_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "song_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -48,9 +48,25 @@ ActiveRecord::Schema.define(version: 2020_07_23_144007) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "postings", force: :cascade do |t|
+  create_table "sharedsongs", force: :cascade do |t|
+    t.string "name"
+    t.string "blob"
     t.integer "user_id"
-    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "shares", force: :cascade do |t|
+    t.integer "sharedsong_id"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string "name"
+    t.string "blob"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

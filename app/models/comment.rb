@@ -1,4 +1,4 @@
 class Comment < ApplicationRecord
     belongs_to :user
-    belongs_to :posting
+    belongs_to :song
 end

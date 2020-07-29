@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  message: MyString
+  name: MyString
+  blob: MyString
   user_id: 1
-  track_id: 1
 
 two:
-  message: MyString
+  name: MyString
+  blob: MyString
   user_id: 1
-  track_id: 1

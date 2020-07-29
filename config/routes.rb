@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :sharedsongs
+  resources :shares
+  resources :songs
+  resources :comments
   resources :users
   resources :follows
   resources :posting
@@ -6,4 +10,5 @@ Rails.application.routes.draw do
   # put '/add', to: 'users#addtrack'
   post '/login', to: 'auth#create'
   patch '/add', to: 'users#addtrack'
+  get '/timeline/:id', to: 'users#timeline'
 end
