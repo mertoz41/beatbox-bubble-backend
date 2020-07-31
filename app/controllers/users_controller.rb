@@ -72,32 +72,53 @@ class UsersController < ApplicationController
         # end 
         
         followed_users.each do |user|
-            # songObj = {}
+            songObj = {}
             user.songs.each do |song|
-                tl_tracks.push(song)
+                # tl_tracks.push(song)
                 
-                # shared_version = Sharedsong.find_by(name: song.name)
+                shared_version = Sharedsong.find_by(name: song.name)
+
+                if shared_version.nil?
+                    songObj[:shared] = []
+                else
+                    songObj[:shared] = shared_version.shares
+                end 
 
                 # byebug
                 
                 
-                # songObj = song.attributes
-                # songObj[:comment_count] = song.comments.length
-                # songObj[:shared_count] = shared_version.shares.length
+                songObj = song.attributes
+                songObj[:comments] = song.comments
                 # songObj[:shared_version_id] = shared_version.id
-                # tl_tracks.push(songObj)
+                tl_tracks.push(songObj)
                 
                 
                 
             end 
         end 
-        
-        
-        
-        
+
+        # byebug
+        user_song_obj = {}
+        logging_user.songs.each do |song| 
+            shared_version = Sharedsong.find_by(name: song.name)
+            
+
+            if shared_version.nil?
+                user_song_obj[:shared] = []
+            else
+                user_song_obj[:shared] = shared_version.shares
+            end 
+
+
+            user_song_obj = song.attributes
+            user_song_obj[:comments] = song.comments
+            tl_tracks.push(user_song_obj)
+        end
 
         
         
+    #    tl_tracks = tl_tracks.sort_by(&:created_at)        
+    
         
         render json: {tl_tracks: tl_tracks} 
         

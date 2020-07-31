@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   post '/login', to: 'auth#create'
   patch '/add', to: 'users#addtrack'
   get '/timeline/:id', to: 'users#timeline'
+  get '/explore', to: 'sharedsongs#explore'
 end
