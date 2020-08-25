@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   patch '/add', to: 'users#addtrack'
   get '/timeline/:id', to: 'users#timeline'
   get '/explore', to: 'sharedsongs#explore'
+  get '/check', to: 'auth#checking'
 end
