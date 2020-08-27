@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get '/timeline/:id', to: 'users#timeline'
   get '/explore', to: 'sharedsongs#explore'
   get '/check', to: 'auth#checking'
+  
 end

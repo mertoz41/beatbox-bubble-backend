@@ -2,15 +2,13 @@ class SharedsongsController < ApplicationController
 
     def explore
 
-        shared_songs = Sharedsong.all
-
-        sorted_songs = shared_songs.sort do |a,b|
-            # byebug
-            b.shares.length <=> a.shares.length
-        end 
+        explore_songs = []
+        sorted_list = Sharedsong.all.sort { |a, b| b.shares.length <=> a.shares.length}
+        topthree = sorted_list.slice(0,3)
+        render json: {explore_songs: topthree}.to_json( :include => [:shares])
 
 
-        # byebug
+        
     end 
 
 

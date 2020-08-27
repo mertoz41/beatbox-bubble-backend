@@ -1,8 +1,8 @@
 class FollowsController < ApplicationController
 
     def create
-        Follow.create(follower_id: params[:followObj][:follower], followed_id: params[:followObj][:followed])
-        render json: {message: "success"}
+        new_follow = Follow.create(follower_id: params[:followObj][:follower], followed_id: params[:followObj][:followed])
+        render json: {message: "success", followObj: new_follow}
     end 
 
     def destroy
