@@ -1,7 +1,7 @@
 class Song < ApplicationRecord
     belongs_to :user
-    has_many :comments
-    has_many :shares
+    has_many :comments, dependent: :destroy
+    has_many :shares, dependent: :destroy
 
     def comment_count
         return self.comments.length
