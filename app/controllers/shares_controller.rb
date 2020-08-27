@@ -12,8 +12,8 @@ class SharesController < ApplicationController
 
     def destroy
         id = params[:id].to_i
-
-        share = Share.find(id)
+        
+        share = Share.find_by(user_id: id)
         share.destroy
         render json: {message: "unshared"}
         
